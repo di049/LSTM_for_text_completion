@@ -1,10 +1,10 @@
 import torch
 import torch.nn as nn
 from tqdm import tqdm
-from eval_lstm import evaluate_model
+from src.eval_lstm import evaluate_model
 
 
-def lstm_train(model, train_loader, val_loader, num_epochs=10, learning_rate=0.001):
+def lstm_train(model, train_loader, val_loader, num_epochs=10, learning_rate=1e-2):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = model.to(device)
     criterion = nn.CrossEntropyLoss()
