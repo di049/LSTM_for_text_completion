@@ -4,10 +4,10 @@ from tqdm import tqdm
 from src.eval_lstm import evaluate_model
 
 
-def lstm_train(model, train_loader, val_loader, num_epochs=10, learning_rate=1e-2):
+def lstm_train(model, train_loader, val_loader, num_epochs=10, learning_rate=1e-2, pad_idx=50256):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = model.to(device)
-    criterion = nn.CrossEntropyLoss()
+    criterion = nn.CrossEntropyLoss(ignore_index=pad_idx)
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
     
     for epoch in tqdm(range(num_epochs)):

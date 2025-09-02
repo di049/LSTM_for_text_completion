@@ -15,22 +15,22 @@ class LSTM(nn.Module):
         return output, hidden    
     
 
-    def generate(self, start_sequence, num_tokens):
+    def generate(self, start_sequence, num_tokens, device='cuda'):
         self.eval()
         with torch.no_grad():
             hidden = None
             
             if isinstance(start_sequence, list):
-                input_seq = torch.tensor(start_sequence).unsqueeze(0).to('cuda')
+                input_seq = torch.tensor(start_sequence).unsqueeze(0).to(device)
             else:
                 if start_sequence.dim() == 1:
-                    input_seq = start_sequence.unsqueeze(0).to('cuda')
+                    input_seq = start_sequence.unsqueeze(0).to(device)
                 else:
-                    input_seq = start_sequence.to('cuda')
+                    input_seq = start_sequence.to(device)
 
             _, hidden = self(input_seq, hidden)
 
-            current_input = input_seq[:, -1].view(1, 1) 
+            current_input = input_seq
             
             generated = []
             for _ in range(num_tokens):

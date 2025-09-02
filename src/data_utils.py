@@ -11,23 +11,23 @@ def load_data(data_path='data/tweets.txt'):
     return data_split
 
 
-def make_clean_data(data_path='data/tweets.txt'):
+def make_clean_data(data_path='data/tweets.txt', re_pattern='@\S+|https?:\S+|http?:\S|[^A-Za-z0-9]+'):
 
     data_split = load_data(data_path)
 
     clean_data = ''
 
     for tweet in data_split:
-        clean_tweet = re.sub('@\S+|https?:\S+|http?:\S|[^A-Za-z0-9]+', ' ', tweet.lower()).strip()
+        clean_tweet = re.sub(re_pattern, ' ', tweet.lower()).strip()
         clean_data += clean_tweet + '\n'
 
     with open('data/tweets_processed.txt', 'w', encoding='utf-8') as f:
         f.write(clean_data)
 
 
-def tokenize_data(data_path='data/tweets_processed.txt'):
+def tokenize_data(data_path='data/tweets_processed.txt', tokenizer_name='distilbert/distilgpt2'):
 
-    tokenizer = AutoTokenizer.from_pretrained('distilbert/distilgpt2')
+    tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
 
     data_split = load_data(data_path)
 

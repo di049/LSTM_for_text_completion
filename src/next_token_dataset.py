@@ -2,11 +2,11 @@ from torch.utils.data import Dataset
 import torch
 
 class TweetsDataset(Dataset):
-    def __init__(self, texts, seq_len=128):
+    def __init__(self, texts, seq_len=128, pad_token=50256):
         self.samples = []
         for line in texts:
             if len(line) < seq_len:
-                line = line + [0] * (seq_len - len(line))
+                line = line + [pad_token] * (seq_len - len(line))
             else:
                 line = line[:seq_len]
 
